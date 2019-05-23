@@ -4,6 +4,7 @@
 UI框架：ElementUI
 
 项目目录结构如下：
+```
 coocaa
 |
 |-build
@@ -63,6 +64,8 @@ coocaa
 |-package.json
 |-package-lock.json
 |-README.md
+```
+
 
 ### 如果在开发过程中误删了上述结构中的目录/文件，请立刻进行补救
 
