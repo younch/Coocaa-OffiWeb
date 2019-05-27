@@ -24,7 +24,8 @@ export default {
   }
 .iconfont{
   font-family:"iconfont" !important;
-  font-size:25px;font-style:normal;
+  font-size:20px;font-style:normal;
+  margin-right: 20px;
   -webkit-font-smoothing: antialiased;
   -webkit-text-stroke-width: 0.2px;
   -moz-osx-font-smoothing: grayscale;}
