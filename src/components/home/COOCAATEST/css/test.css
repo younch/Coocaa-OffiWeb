@@ -1,0 +1,41 @@
+.slide_w{
+				width:350px;
+				height: 150px;
+				border: 1px solid;
+				overflow: hidden;
+			}
+			.ul li{
+				list-style:none;
+				width: 300px;
+				height: 38px;
+			}
+			.ul {
+				height:220px;
+				position:relative;
+				transition: all 2s;
+				animation:aaa 15s infinite 2s running;
+			}
+			@keyframes aaa {
+				0% {
+				transform:translatey(0px);
+			}
+			15% {
+				transform:translatey(-38px);
+			}
+			25% {
+				transform:translateY(-72px);
+			}
+			50% {
+				transform:translateY(-120px);
+			}
+			75% {
+				transform:translateY(-220px);
+			}
+			100% {
+				transform:translateY(-400px);
+			}
+			}
+			.ul:hover {
+				animation-play-state:paused;
+				cursor:pointer;
+			}
