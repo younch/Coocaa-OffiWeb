@@ -3,15 +3,15 @@
       <div class="menu">
           <div class="slogan">Coocaa Admin</div>
           <ul class="menu-items" @click="menuChange">
-              <li class="menu-item" data-id="0"><i class="iconfont">&#xe613;</i>Dashboard</li>
-              <li class="menu-item" data-id="1"><i class="iconfont">&#xe630;</i>个人资料</li>
-              <li class="menu-item" data-id="2"><i class="iconfont">&#xe665;</i>人员管理</li>
-              <li class="menu-item" data-id="3"><i class="iconfont">&#xe628;</i>文章管理</li>
-              <li class="menu-item" data-id="4"><i class="iconfont">&#xe60f;</i>栏目管理</li>
-              <li class="menu-item" data-id="5"><i class="iconfont">&#xe618;</i>项目管理</li>
-              <li class="menu-item" data-id="6"><i class="iconfont">&#xe607;</i>报表统计</li>
-              <li class="menu-item" data-id="7"><i class="iconfont">&#xe644;</i>图册管理</li>
-              <li class="menu-item" data-id="8"><i class="iconfont">&#xe664;</i>言论管理</li>
+              <li :class="{'menu-item':true, 'active': menuStatus == '0'}" data-id="0"><i class="iconfont">&#xe613;</i>Dashboard</li>
+              <li :class="{'menu-item':true, 'active': menuStatus == '1'}" data-id="1"><i class="iconfont">&#xe630;</i>个人资料</li>
+              <li :class="{'menu-item':true, 'active': menuStatus == '2'}" data-id="2"><i class="iconfont">&#xe665;</i>人员管理</li>
+              <li :class="{'menu-item':true, 'active': menuStatus == '3'}" data-id="3"><i class="iconfont">&#xe628;</i>文章管理</li>
+              <li :class="{'menu-item':true, 'active': menuStatus == '4'}" data-id="4"><i class="iconfont">&#xe60f;</i>栏目管理</li>
+              <li :class="{'menu-item':true, 'active': menuStatus == '5'}" data-id="5"><i class="iconfont">&#xe618;</i>项目管理</li>
+              <li :class="{'menu-item':true, 'active': menuStatus == '6'}" data-id="6"><i class="iconfont">&#xe607;</i>报表统计</li>
+              <li :class="{'menu-item':true, 'active': menuStatus == '7'}" data-id="7"><i class="iconfont">&#xe644;</i>图册管理</li>
+              <li :class="{'menu-item':true, 'active': menuStatus == '8'}" data-id="8"><i class="iconfont">&#xe664;</i>言论管理</li>
           </ul>
       </div>
       <div class="main">
@@ -20,7 +20,7 @@
           </header>
 <!--          组件切换-->
           <div class="content">
-              <aritcle-manage v-if="menuStatus == 3" style="height: 1000px"></aritcle-manage>
+              <aritcle-manage v-if="menuStatus == 3"></aritcle-manage>
           </div>
       </div>
     </div>
@@ -82,6 +82,10 @@
   cursor: pointer;
   transition: .5s;
 }
+.active{
+  background: #3788EE;
+  color: #fff;
+}
 .main{
   position: relative;
   width: 85%;
@@ -105,7 +109,8 @@
   cursor: pointer;
 }
 .content{
-  max-height: 670px;
+  margin-top: 2px;
+  height: calc(100% - 50px);
   overflow-y: scroll;
 }
 </style>
