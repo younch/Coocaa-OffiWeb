@@ -16,6 +16,7 @@
       </div>
       <div class="main">
           <header class="header">
+              <user-info v-if="menuStatus == 1" style="height: 1000px"></user-info>
               <img class="avatar" src="http://www.gokisun.top/avatar.jpg" alt="avatar">
           </header>
 <!--          组件切换-->
@@ -27,11 +28,12 @@
 </template>
 
 <script>
+  import userInfo from '../../userInfo/userInfo'
   import aritcleManage from '../articleManage/article'
     export default {
       name: "topBackstageIndex",
       components: {
-        aritcleManage
+        aritcleManage, userInfo
       },
       data () {
         return {
