@@ -3,17 +3,14 @@
   "data": [{
     "id": "0001",
     "type": "001",
-    "contain": "1",
     "src": "http://www.gokisun.top/avatar.jpg"
   },{
     "id": "0002",
     "type": "002",
-    "contain": "2",
     "src": "http://www.gokisun.top/avatar.jpg"
   },{
     "id": "0003",
     "type": "003",
-    "contain": "3",
     "src": "http://www.gokisun.top/avatar.jpg"
   },{
     "id": "0004",

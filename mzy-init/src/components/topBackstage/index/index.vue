@@ -22,7 +22,7 @@
           <div class="content">
             <aritcle-manage v-if="menuStatus == 3" style="height: 100%;"></aritcle-manage>
             <user-manage v-if="menuStatus == 2" style="height: 100%;"></user-manage>
-            <galleryManage v-if="menuStatus == 7" style="height: 100%;"></galleryManage>
+            <galleryManage v-if="menuStatus == 7"></galleryManage>
             <commentManage v-if="menuStatus == 8" style="height: 100%;"></commentManage>
           </div>
       </div>
@@ -44,7 +44,7 @@
       },
       data () {
         return {
-          menuStatus: 2
+          menuStatus: 7
         }
       },
       methods: {

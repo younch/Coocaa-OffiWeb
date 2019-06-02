@@ -10,10 +10,15 @@
     </div>
     <!--中间小字的操作-->
     <div class="galleryMiddle">
-      <div class="operation">
+      <div style="display: inline-block;" v-show="showConfirmAndCancelBtn">
+        <button class="confirmAndCancel" @click="dealChooseAll">全选</button>
+        <button class="confirmAndCancel" @click="dealConfirmBtn">删除</button>
+        <button class="confirmAndCancel" @click="dealCancelBtn">取消</button>
+      </div>
+      <div class="operation" style="margin-right: 5%">
         <span class="operationItem">导入</span>
         <span class="operationItem">批量导入</span>
-        <span class="operationItem">操作</span>
+        <span class="operationItem" @click="dealOperation">操作</span>
       </div>
     </div>
     <!--清除浮动-->
@@ -25,24 +30,45 @@
            data-id="0"
            v-show="galleryStatus == 0"
       >
-        <span class="imgItem" v-for="item of galleryListTypeFir"
-              :key="item.id"><img :src="item.src" alt="" class="showImg">{{item.contain}}</span>
+        <span v-for="item of galleryListTypeFir"
+              :key="item.id"
+              :class="{'imgItem':'true'=='true',showImgActive:showImgActive}"
+              @click="dealImgOperation($event)"
+              ref="one"
+              :data-index="item.id"
+        >
+          <img :src="item.src" alt="" class="showImg">
+        </span>
       </div>
       <!--分类2图片-->
       <div class="imgContainer"
-           data-id="0"
+           data-id="1"
            v-show="galleryStatus == 1"
       >
-        <span class="imgItem" v-for="item of galleryListTypeFir"
-              :key="item.id"><img :src="item.src" alt="" class="showImg">{{item.contain}}</span>
+        <span v-for="item of galleryListTypeSec"
+              :key="item.id"
+              :class="{'imgItem':'true'=='true',showImgActive:showImgActive}"
+              @click="dealImgOperation($event)"
+              ref="two"
+              :data-index="item.id"
+        >
+          <img :src="item.src" alt="" class="showImg">
+        </span>
       </div>
       <!--分类3图片-->
       <div class="imgContainer"
-           data-id="0"
+           data-id="2"
            v-show="galleryStatus == 2"
       >
-        <span class="imgItem" v-for="item of galleryListTypeFir"
-              :key="item.id"><img :src="item.src" alt="" class="showImg">{{item.contain}}</span>
+        <span v-for="item of galleryListTypeThr"
+              :key="item.id"
+              :class="{'imgItem':'true'=='true',showImgActive:showImgActive}"
+              @click="dealImgOperation($event)"
+              ref="three"
+              :data-index="item.id"
+        >
+          <img :src="item.src" alt="" class="showImg">
+        </span>
       </div>
     </div>
   </div>
@@ -56,15 +82,26 @@
       data () {
         return {
           galleryStatus:0,
+          //每个页面里面的图片的集合
           galleryListTypeFir: [],
           galleryListTypeSec:[],
-          galleryListTypeThr:[]
+          galleryListTypeThr:[],
+          //每个页面出现三个按钮
+          showConfirmAndCancelBtn:false,
+          showConfirmAndCancelBtnSeparated:[false,false,false],
+          //页面的全选按钮
+          showImgActive: false,
+          showImgActiveSeparated:[false,false,false],
         }
       },
       methods: {
         galleryChange (e){
           var newStatus = e.target.dataset.id;
           this.galleryStatus = newStatus ? newStatus : this.galleryStatus;
+          let index = this.galleryStatus;
+          //点击图片分类转换按钮，需要按照页面的不同显示操作button以及图片内容等东西
+          this.showConfirmAndCancelBtn = this.showConfirmAndCancelBtnSeparated[index];
+          this.showImgActive = this.showImgActiveSeparated[index];
         },
         getInfo(){
           axios.get("api/gallery.json").then((res)=>{
@@ -82,6 +119,107 @@
               this.galleryListTypeThr.push(info);
             }
           }
+        },
+        //显示 操作 按钮
+        dealOperation(){
+          let index = this.galleryStatus;
+          if(this.showConfirmAndCancelBtnSeparated[index] == false){
+            this.showConfirmAndCancelBtnSeparated[index] = true;
+          }else{
+            this.showConfirmAndCancelBtnSeparated[index] = false;
+          }
+          this.showConfirmAndCancelBtn = this.showConfirmAndCancelBtnSeparated[index];
+        },
+        //点击确定按钮
+        dealConfirmBtn(){
+          let index = this.galleryStatus;
+          let flag = false;
+          //用来记录用户点击需要删除的图片
+          let delImg = [];
+          if(index == 0){
+            for (let i = 0;i<this.$refs.one.length;i++){
+              if(this.$refs.one[i].style.border != ""){
+                flag = true;
+                //将图片的信息通过一个个的对象加入数组传给后台
+                let imgInfo = new Object();
+                imgInfo.id = this.$refs.one[i].dataset.index;
+                imgInfo.type = index;
+                let JSONInfo = JSON.stringify(imgInfo);
+                delImg.push(JSONInfo);
+              }
+            }
+          }else if(index == 1){
+            for (let i = 0;i<this.$refs.two.length;i++){
+              if(this.$refs.two[i].style.border != ""){
+                flag = true;
+                let imgInfo = new Object();
+                imgInfo.id = this.$refs.two[i].dataset.index;
+                imgInfo.type = index;
+                let JSONInfo = JSON.stringify(imgInfo);
+                delImg.push(JSONInfo);
+              }
+            }
+          }else if(index == 2){
+            for (let i = 0;i<this.$refs.three.length;i++){
+              if(this.$refs.three[i].style.border != ""){
+                flag = true;
+                let imgInfo = new Object();
+                imgInfo.id = this.$refs.three[i].dataset.index;
+                imgInfo.type = index;
+                let JSONInfo = JSON.stringify(imgInfo);
+                delImg.push(JSONInfo);
+              }
+            }
+          }
+          if(flag == true){
+          //  发送请求给后台
+            axios({
+              methods: "get",
+              url:"",
+              data:{
+                delImgInfo:delImg
+              }
+            }).then(
+            //  刷新页面，图片重排，重新getInfo???
+            );
+          }
+        },
+        //点击取消按钮
+        dealCancelBtn(){
+          let index = this.galleryStatus;
+          //所有的border样式都得取消
+          this.showImgActive = false;
+          this.showConfirmAndCancelBtn = false;
+          if(index == 0){
+            for (let i = 0;i<this.$refs.one.length;i++){
+              this.$refs.one[i].style.border = ""
+            }
+          }else if(index == 1){
+            for (let i = 0;i<this.$refs.two.length;i++){
+              this.$refs.two[i].style.border = ""
+            }
+          }else if(index == 2){
+            for (let i = 0;i<this.$refs.three.length;i++){
+              this.$refs.three[i].style.border = ""
+            }
+          }
+        },
+        //点击图片
+        dealImgOperation(e){
+          if(this.showConfirmAndCancelBtn == true){
+            //点击图片
+            if(e.target.parentNode.style.border != ""){
+              e.target.parentNode.style.border = "";
+            }else{
+              e.target.parentNode.style.border = "1px solid #3788EE";
+            }
+          }
+        },
+        //点击全选按钮
+        dealChooseAll(){
+          let index = this.galleryStatus;
+          this.showImgActiveSeparated[index] = true;
+          this.showImgActive = this.showImgActiveSeparated[index];
         }
       },
       mounted() {
@@ -92,7 +230,6 @@
 
 <style scoped>
   .galleryContain{
-    height: 100%;
     margin: 30px;
     background: #fff;
     border-radius: 4px;
@@ -117,6 +254,23 @@
     cursor: pointer;
   }
   /*中间操作样式*/
+  .confirmAndCancel{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline:0;
+    font-size: 14px;
+    height: 39px;
+    width: 70px;
+    margin-left: 20px;
+    border-radius: 5px;
+    background-color: #3788EE;
+    color: #fff;
+    border: 2px solid #fff;
+    cursor: pointer;
+  }
+  .galleryMiddle{
+    height: 40px;
+  }
   .operation{
     float: right;
   }
@@ -145,5 +299,8 @@
     height: 90%;
     width: 90%;
     padding: 5%;
+  }
+  .showImgActive{
+    border: 1px solid #3788EE;
   }
 </style>
