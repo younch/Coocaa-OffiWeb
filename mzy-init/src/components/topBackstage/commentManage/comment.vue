@@ -41,11 +41,11 @@
           <th class="operationInfo">操作</th>
         </tr>
         <tr class="commentTableBody" v-for="(item,index) of messageList"
-            :key="item.id">
+            :key="index">
           <th>{{item.content}}</th>
           <th>{{item.user}}</th>
           <th>{{item.time}}</th>
-          <th><button class="operationBtn" :data-id="item.id">删除</button></th>
+          <th><button class="operationBtn" :data-id="item.id" @click="deleteInfo(item.type,item.id)">删除</button></th>
         </tr>
       </table>
     </div>
@@ -63,7 +63,7 @@
           <th>{{item.content}}</th>
           <th>{{item.user}}</th>
           <th>{{item.time}}</th>
-          <th><button class="operationBtn" :data-id="item.id">删除</button></th>
+          <th><button class="operationBtn" :data-id="item.id" @click="deleteInfo(item.type,item.id)">删除</button></th>
         </tr>
       </table>
     </div>
@@ -157,9 +157,17 @@
         dealSearchBtn(){
           if(this.searchBox != ""){
             let searchContain = this.searchBox;
-            //获取到输入框里面的内容
+            //获取到输入框里面的内容，进行模糊匹配
+
             console.log(searchContain);
+          }else if(this.searchBox == ""){
+          //  展示全部内容
+
           }
+        },
+        deleteInfo(type,id){
+        //  处理删除事件
+          alert("删除");
         }
       },
       mounted() {
@@ -180,7 +188,6 @@
 
 <style scoped>
   .commentContainer{
-    height: 100%;
     margin: 30px;
     background: #fff;
     border-radius: 4px;
@@ -220,6 +227,7 @@
     /*设置输入框字体颜色*/
     color: 	#696969;
     font-size: 18px;
+    padding-left: 10px;
     border-radius: 5px;
     border-style: none;
     border: 1px solid #9E9E9E;

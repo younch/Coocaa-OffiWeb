@@ -1,31 +1,31 @@
 <template>
   <div class="galleryContain">
-    <h2 style="padding: 20px 40px;">å›¾å†Œç®¡ç†</h2>
+    <h2 style="padding: 20px 40px;">Í¼²á¹ÜÀí</h2>
     <hr style="background: #F3F6F8;border: none; height: 2px;">
-    <!--é¦–éƒ¨æç¤ºæ¡†ä¿¡æ¯-->
+    <!--Ê×²¿ÌáÊ¾¿òĞÅÏ¢-->
     <div class="galleryTop" @click="galleryChange">
-      <div :class="{'galleryItem':'true'=='true',active:galleryStatus=='0'}" data-id="0">å›¾ç‰‡åˆ†ç±»1</div>
-      <div :class="{'galleryItem':'true'=='true',active:galleryStatus=='1'}" data-id="1">å›¾ç‰‡åˆ†ç±»2</div>
-      <div :class="{'galleryItem':'true'=='true',active:galleryStatus=='2'}" data-id="2">å›¾ç‰‡åˆ†ç±»3</div>
+      <div :class="{'galleryItem':'true'=='true',active:galleryStatus=='0'}" data-id="0">Í¼Æ¬·ÖÀà1</div>
+      <div :class="{'galleryItem':'true'=='true',active:galleryStatus=='1'}" data-id="1">Í¼Æ¬·ÖÀà2</div>
+      <div :class="{'galleryItem':'true'=='true',active:galleryStatus=='2'}" data-id="2">Í¼Æ¬·ÖÀà3</div>
     </div>
-    <!--ä¸­é—´å°å­—çš„æ“ä½œ-->
+    <!--ÖĞ¼äĞ¡×ÖµÄ²Ù×÷-->
     <div class="galleryMiddle">
       <div style="display: inline-block;" v-show="showConfirmAndCancelBtn">
-        <button class="confirmAndCancel" @click="dealChooseAll">å…¨é€‰</button>
-        <button class="confirmAndCancel" @click="dealConfirmBtn">åˆ é™¤</button>
-        <button class="confirmAndCancel" @click="dealCancelBtn">å–æ¶ˆ</button>
+        <button class="confirmAndCancel" @click="dealChooseAll">È«Ñ¡</button>
+        <button class="confirmAndCancel" @click="dealConfirmBtn">É¾³ı</button>
+        <button class="confirmAndCancel" @click="dealCancelBtn">È¡Ïû</button>
       </div>
       <div class="operation" style="margin-right: 5%">
-        <span class="operationItem">å¯¼å…¥</span>
-        <span class="operationItem">æ‰¹é‡å¯¼å…¥</span>
-        <span class="operationItem" @click="dealOperation">æ“ä½œ</span>
+        <span class="operationItem">µ¼Èë</span>
+        <span class="operationItem">ÅúÁ¿µ¼Èë</span>
+        <span class="operationItem" @click="dealOperation">²Ù×÷</span>
       </div>
     </div>
-    <!--æ¸…é™¤æµ®åŠ¨-->
+    <!--Çå³ı¸¡¶¯-->
     <br clear="all" />
-    <!--å±•ç¤ºå›¾ç‰‡-->
+    <!--Õ¹Ê¾Í¼Æ¬-->
     <div class="GalleryFoot">
-      <!--åˆ†ç±»1å›¾ç‰‡-->
+      <!--·ÖÀà1Í¼Æ¬-->
       <div class="imgContainer"
            data-id="0"
            v-show="galleryStatus == 0"
@@ -35,12 +35,11 @@
               :class="{'imgItem':'true'=='true',showImgActive:showImgActive}"
               @click="dealImgOperation($event)"
               ref="one"
-              :data-index="item.id"
         >
           <img :src="item.src" alt="" class="showImg">
         </span>
       </div>
-      <!--åˆ†ç±»2å›¾ç‰‡-->
+      <!--·ÖÀà2Í¼Æ¬-->
       <div class="imgContainer"
            data-id="1"
            v-show="galleryStatus == 1"
@@ -50,12 +49,11 @@
               :class="{'imgItem':'true'=='true',showImgActive:showImgActive}"
               @click="dealImgOperation($event)"
               ref="two"
-              :data-index="item.id"
         >
           <img :src="item.src" alt="" class="showImg">
         </span>
       </div>
-      <!--åˆ†ç±»3å›¾ç‰‡-->
+      <!--·ÖÀà3Í¼Æ¬-->
       <div class="imgContainer"
            data-id="2"
            v-show="galleryStatus == 2"
@@ -65,7 +63,6 @@
               :class="{'imgItem':'true'=='true',showImgActive:showImgActive}"
               @click="dealImgOperation($event)"
               ref="three"
-              :data-index="item.id"
         >
           <img :src="item.src" alt="" class="showImg">
         </span>
@@ -82,16 +79,22 @@
       data () {
         return {
           galleryStatus:0,
-          //æ¯ä¸ªé¡µé¢é‡Œé¢çš„å›¾ç‰‡çš„é›†åˆ
+          //Ã¿¸öÒ³ÃæÀïÃæµÄÍ¼Æ¬µÄ¼¯ºÏ
           galleryListTypeFir: [],
           galleryListTypeSec:[],
           galleryListTypeThr:[],
-          //æ¯ä¸ªé¡µé¢å‡ºç°ä¸‰ä¸ªæŒ‰é’®
+          //Ã¿¸öÒ³Ãæ³öÏÖÈı¸ö°´Å¥
           showConfirmAndCancelBtn:false,
           showConfirmAndCancelBtnSeparated:[false,false,false],
-          //é¡µé¢çš„å…¨é€‰æŒ‰é’®
+          // showConfirmAndCancelBtnFir:false,
+          // showConfirmAndCancelBtnSec:false,
+          // showConfirmAndCancelBtnThr:false,
+          //Ò³ÃæµÄÈ«Ñ¡°´Å¥
           showImgActive: false,
           showImgActiveSeparated:[false,false,false],
+          // showImgActiveFir:false,
+          // showImgActiveSec:false,
+          // showImgActiveThr:false,
         }
       },
       methods: {
@@ -99,9 +102,16 @@
           var newStatus = e.target.dataset.id;
           this.galleryStatus = newStatus ? newStatus : this.galleryStatus;
           let index = this.galleryStatus;
-          //ç‚¹å‡»å›¾ç‰‡åˆ†ç±»è½¬æ¢æŒ‰é’®ï¼Œéœ€è¦æŒ‰ç…§é¡µé¢çš„ä¸åŒæ˜¾ç¤ºæ“ä½œbuttonä»¥åŠå›¾ç‰‡å†…å®¹ç­‰ä¸œè¥¿
+          //µã»÷Í¼Æ¬·ÖÀà×ª»»°´Å¥£¬ĞèÒª°´ÕÕÒ³ÃæµÄ²»Í¬ÏÔÊ¾²Ù×÷buttonÒÔ¼°Í¼Æ¬ÄÚÈİµÈ¶«Î÷
           this.showConfirmAndCancelBtn = this.showConfirmAndCancelBtnSeparated[index];
           this.showImgActive = this.showImgActiveSeparated[index];
+          // if(this.galleryStatus == 0){
+          //   this.showConfirmAndCancelBtn = this.showConfirmAndCancelBtnFir;
+          // }else if(this.galleryStatus == 1){
+          //   this.showConfirmAndCancelBtn = this.showConfirmAndCancelBtnSec;
+          // }else if(this.galleryStatus == 2){
+          //   this.showConfirmAndCancelBtn = this.showConfirmAndCancelBtnThr;
+          // }
         },
         getInfo(){
           axios.get("api/gallery.json").then((res)=>{
@@ -120,7 +130,7 @@
             }
           }
         },
-        //æ˜¾ç¤º æ“ä½œ æŒ‰é’®
+        //ÏÔÊ¾ ²Ù×÷ °´Å¥
         dealOperation(){
           let index = this.galleryStatus;
           if(this.showConfirmAndCancelBtnSeparated[index] == false){
@@ -129,65 +139,64 @@
             this.showConfirmAndCancelBtnSeparated[index] = false;
           }
           this.showConfirmAndCancelBtn = this.showConfirmAndCancelBtnSeparated[index];
+          // console.log(this.galleryStatus);
+          // if(this.galleryStatus == 0){
+          //   if(this.showConfirmAndCancelBtnFir == false){
+          //     this.showConfirmAndCancelBtnFir = true;
+          //   }else{
+          //     this.showConfirmAndCancelBtnFir = false;
+          //   }
+          //   this.showConfirmAndCancelBtn = this.showConfirmAndCancelBtnFir;
+          // }else if(this.galleryStatus == 1){
+          //   if(this.showConfirmAndCancelBtnSec == false){
+          //     this.showConfirmAndCancelBtnSec = true;
+          //   }else{
+          //     this.showConfirmAndCancelBtnSec = false;
+          //   }
+          //   this.showConfirmAndCancelBtn = this.showConfirmAndCancelBtnSec;
+          // }else if(this.galleryStatus == 2){
+          //   if(this.showConfirmAndCancelBtnThr == false){
+          //     this.showConfirmAndCancelBtnThr = true;
+          //   }else{
+          //     this.showConfirmAndCancelBtnThr = false;
+          //   }
+          //   this.showConfirmAndCancelBtn = this.showConfirmAndCancelBtnThr;
+          // }
         },
-        //ç‚¹å‡»ç¡®å®šæŒ‰é’®
+        //µã»÷È·¶¨°´Å¥
         dealConfirmBtn(){
           let index = this.galleryStatus;
           let flag = false;
-          //ç”¨æ¥è®°å½•ç”¨æˆ·ç‚¹å‡»éœ€è¦åˆ é™¤çš„å›¾ç‰‡
-          let delImg = [];
           if(index == 0){
+            console.log(1);
             for (let i = 0;i<this.$refs.one.length;i++){
               if(this.$refs.one[i].style.border != ""){
                 flag = true;
-                //å°†å›¾ç‰‡çš„ä¿¡æ¯é€šè¿‡ä¸€ä¸ªä¸ªçš„å¯¹è±¡åŠ å…¥æ•°ç»„ä¼ ç»™åå°
-                let imgInfo = new Object();
-                imgInfo.id = this.$refs.one[i].dataset.index;
-                imgInfo.type = index;
-                let JSONInfo = JSON.stringify(imgInfo);
-                delImg.push(JSONInfo);
+                break;
               }
             }
           }else if(index == 1){
+            console.log(2);
             for (let i = 0;i<this.$refs.two.length;i++){
               if(this.$refs.two[i].style.border != ""){
                 flag = true;
-                let imgInfo = new Object();
-                imgInfo.id = this.$refs.two[i].dataset.index;
-                imgInfo.type = index;
-                let JSONInfo = JSON.stringify(imgInfo);
-                delImg.push(JSONInfo);
+                break;
               }
             }
           }else if(index == 2){
+            console.log(3);
             for (let i = 0;i<this.$refs.three.length;i++){
               if(this.$refs.three[i].style.border != ""){
                 flag = true;
-                let imgInfo = new Object();
-                imgInfo.id = this.$refs.three[i].dataset.index;
-                imgInfo.type = index;
-                let JSONInfo = JSON.stringify(imgInfo);
-                delImg.push(JSONInfo);
+                break;
               }
             }
           }
-          if(flag == true){
-          //  å‘é€è¯·æ±‚ç»™åå°
-            axios({
-              methods: "get",
-              url:"",
-              params:{
-                delImgInfo:delImg
-              }
-            }).then(
-            //  åˆ·æ–°é¡µé¢ï¼Œå›¾ç‰‡é‡æ’ï¼Œé‡æ–°getInfo???
-            );
-          }
         },
-        //ç‚¹å‡»å–æ¶ˆæŒ‰é’®
+        //µã»÷È¡Ïû°´Å¥
         dealCancelBtn(){
           let index = this.galleryStatus;
-          //æ‰€æœ‰çš„borderæ ·å¼éƒ½å¾—å–æ¶ˆ
+          //ËùÓĞµÄborderÑùÊ½¶¼µÃÈ¡Ïû
           this.showImgActive = false;
           this.showConfirmAndCancelBtn = false;
           if(index == 0){
@@ -204,22 +213,32 @@
             }
           }
         },
-        //ç‚¹å‡»å›¾ç‰‡
+        //µã»÷Í¼Æ¬
         dealImgOperation(e){
           if(this.showConfirmAndCancelBtn == true){
-            //ç‚¹å‡»å›¾ç‰‡
+            //µã»÷Í¼Æ¬
             if(e.target.parentNode.style.border != ""){
               e.target.parentNode.style.border = "";
             }else{
               e.target.parentNode.style.border = "1px solid #3788EE";
             }
           }
+          // if(this.galleryStatus == 0){
+          //
+          // }
         },
-        //ç‚¹å‡»å…¨é€‰æŒ‰é’®
+        //µã»÷È«Ñ¡°´Å¥
         dealChooseAll(){
           let index = this.galleryStatus;
           this.showImgActiveSeparated[index] = true;
           this.showImgActive = this.showImgActiveSeparated[index];
+          // if(this.galleryStatus == 0){
+          //   this.showImgActiveFir = true;
+          // }else if(this.galleryStatus == 1){
+          //   this.showImgActiveSec = true;
+          // }else if(this.galleryStatus == 2){
+          //   this.showImgActiveThr = true;
+          // }
         }
       },
       mounted() {
@@ -234,7 +253,7 @@
     background: #fff;
     border-radius: 4px;
   }
-  /*é¦–éƒ¨æ ·å¼*/
+  /*Ê×²¿ÑùÊ½*/
   .galleryTop{
     color: #696969;
     padding: 10px;
@@ -253,7 +272,7 @@
   .galleryItem:hover{
     cursor: pointer;
   }
-  /*ä¸­é—´æ“ä½œæ ·å¼*/
+  /*ÖĞ¼ä²Ù×÷ÑùÊ½*/
   .confirmAndCancel{
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -283,7 +302,7 @@
   .operationItem:hover{
     cursor: pointer;
   }
-  /*å›¾ç‰‡å±•ç¤ºæ ·å¼*/
+  /*Í¼Æ¬Õ¹Ê¾ÑùÊ½*/
   .imgContainer{
     padding: 20px;
   }

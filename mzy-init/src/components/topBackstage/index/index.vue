@@ -20,10 +20,10 @@
           </header>
 <!--          组件切换-->
           <div class="content">
-            <aritcle-manage v-if="menuStatus == 3" style="height: 100%;"></aritcle-manage>
-            <user-manage v-if="menuStatus == 2" style="height: 100%;"></user-manage>
+            <aritcle-manage v-if="menuStatus == 3"></aritcle-manage>
+            <user-manage v-if="menuStatus == 2"></user-manage>
             <galleryManage v-if="menuStatus == 7"></galleryManage>
-            <commentManage v-if="menuStatus == 8" style="height: 100%;"></commentManage>
+            <commentManage v-if="menuStatus == 8"></commentManage>
           </div>
       </div>
     </div>
@@ -44,7 +44,7 @@
       },
       data () {
         return {
-          menuStatus: 7
+          menuStatus: 2
         }
       },
       methods: {

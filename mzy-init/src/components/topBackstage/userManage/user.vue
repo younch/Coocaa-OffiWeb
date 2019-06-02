@@ -25,28 +25,32 @@
             <!--按钮点击事件，进行信息的更改-->
             <th><button class="operationBtn"
                         :data-id="item.id"
-                        @click="dealChangeStatus(item)"
+                        @click="dealChangeStatus(item,index)"
             >操作</button></th>
           </tr>
         </table>
       </div>
       <!--对话框-->
-      <!--<modify-box></modify-box>-->
+      <div class="popBox">
+        <modifyBox v-if="showPopBox" :clickMemberInfo="clickMemberInfo" :showPopBox="showPopBox" v-on:dealShowPopBox="dealShowPopBox"></modifyBox>
+      </div>
     </div>
 </template>
 
 <script>
   import axios from 'axios'
-  // import modifyBox from "modifyBox"
+  import modifyBox from './modifyBox'
   export default {
     name: "user",
     data () {
       return {
-        dataList : []
+        dataList : [],
+        showPopBox:false,
+        clickMemberInfo:new Object()
       }
     },
-    components:{
-      // modifyBox
+    components: {
+      modifyBox:modifyBox
     },
     methods:{
       getInfo() {
@@ -61,10 +65,20 @@
           this.dataList.push(dataInfo);
         }
       },
-      dealChangeStatus(info){
+      dealChangeStatus(info,index){
       //  根据ID来确定用户点击的信息
-        let ID = info.id;
-      //  在定义一个弹出框组件
+        this.clickMemberInfo.id = info.id;
+        this.clickMemberInfo.index = index+1;
+        this.clickMemberInfo.name = info.name;
+        this.clickMemberInfo.university = info.university;
+        this.clickMemberInfo.time = info.time;
+        this.clickMemberInfo.state = info.state;
+        //其实可以写在一个页面里面，但是既然用了Vue，还是得做做组件传值哈
+        //  在定义一个弹出框组件
+        this.showPopBox = true;
+      },
+      dealShowPopBox(showBox){
+        this.showPopBox = showBox;
       }
     },
     mounted() {
@@ -76,7 +90,6 @@
 
 <style scoped>
   .mainUser{
-    height: 100%;
     margin: 30px;
     background: #fff;
     border-radius: 4px;
