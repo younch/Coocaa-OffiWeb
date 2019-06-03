@@ -44,7 +44,7 @@
       },
       data () {
         return {
-          menuStatus: 2
+          menuStatus: 8
         }
       },
       methods: {

@@ -80,6 +80,8 @@
           commentStatus: 0,
           commentList: [],
           messageList: [],
+          originCommentList:[],
+          originMessageList:[],
           selectItem:[{
             "value":"back",
             "name":"更新时间倒叙"
@@ -129,6 +131,11 @@
               this.commentList.push(dataInfo);
             }
           }
+          //保存原始数据
+          this.originCommentList = this.commentList;
+          this.originMessageList = this.messageList;
+          this.sortDataArray(this.messageList,"back");
+          this.sortDataArray(this.commentList,"back");
         },
         //让下拉框里面的内容随着页面的调整而调整
         getTimeSequence(e){
@@ -136,16 +143,20 @@
           if(e.target.value == "order"){
             if(this.commentStatus == 0){
               this.selectItemContainComment = "order";
+              this.sortDataArray(this.messageList,"order");
               //更改一下选择框里面选择的值
             }else if(this.commentStatus == 1){
               this.selectItemContainMessage = "order";
+              this.sortDataArray(this.commentList,"order");
             }
           }else if(e.target.value == "back"){
             if(this.commentStatus == 0){
               this.selectItemContainComment = "back";
+              this.sortDataArray(this.messageList,"back");
               //更改一下选择框里面选择的值
             }else if(this.commentStatus == 1){
               this.selectItemContainMessage = "back";
+              this.sortDataArray(this.commentList,"back");
             }
           }
         //  获取到当前用户的所在的是留言还是评论
@@ -154,15 +165,46 @@
            * 其实自己还是知道需要分开，那么就采用使用data进行绑定吧~实现一下，不行就换
            */
         },
+        //对数组根据日期进行排序
+        sortDataArray(dataArray,way){
+          if(way == "order"){
+            return dataArray.sort(function(a,b) {
+              return Date.parse(a.time.replace(/-/g,"/"))-Date.parse(b.time.replace(/-/g,"/"));
+            });
+          }else if(way == "back"){
+            return dataArray.sort(function(a,b) {
+              return Date.parse(b.time.replace(/-/g,"/"))-Date.parse(a.time.replace(/-/g,"/"));
+            });
+          }
+        },
         dealSearchBtn(){
           if(this.searchBox != ""){
             let searchContain = this.searchBox;
             //获取到输入框里面的内容，进行模糊匹配
-
-            console.log(searchContain);
+            var containInfo = [];
+            if(this.commentStatus == 1){
+              for (let i = 0;i<this.commentList.length;i++){
+                if(this.commentList[i].id.indexOf(searchContain) != -1 || this.commentList[i].content.indexOf(searchContain) != -1 ||this.commentList[i].user.indexOf(searchContain) != -1 || this.commentList[i].time.indexOf(searchContain) != -1){
+                  containInfo.push(this.commentList[i]);
+                }
+              }
+              this.commentList = containInfo;
+            }else if(this.commentStatus == 0){
+              for (let i = 0;i<this.messageList.length;i++){
+                if(this.messageList[i].id.indexOf(searchContain) != -1 || this.messageList[i].content.indexOf(searchContain) != -1 ||this.messageList[i].user.indexOf(searchContain) != -1 || this.messageList[i].time.indexOf(searchContain) != -1){
+                  containInfo.push(this.messageList[i]);
+                }
+              }
+              this.messageList = containInfo;
+            }
+            console.log(containInfo);
           }else if(this.searchBox == ""){
           //  展示全部内容
-
+            if(this.commentStatus == 1){
+              this.commentList = this.originCommentList;
+            }else if(this.commentStatus == 0){
+              this.messageList = this.originMessageList;
+            }
           }
         },
         deleteInfo(type,id){
@@ -178,8 +220,14 @@
           //监听搜索框里面值的不断变化
           if(this.commentStatus == 0){
             this.searchBoxComment = this.searchBox;
+            if(this.searchBoxComment == ""){
+              this.messageList = this.originMessageList;
+            }
           }else if(this.commentStatus == 1){
             this.searchBoxMessage = this.searchBox;
+            if(this.searchBoxMessage == ""){
+              this.commentList = this.originCommentList;
+            }
           }
         }
       }
