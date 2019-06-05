@@ -69,6 +69,10 @@ export default {
     allSize: function () {
       this.currentPage = 1
       this.arrPageChange()
+    },
+    perSize: function () {
+      this.currentPage = 1
+      this.arrPageChange()
     }
   }
 }
