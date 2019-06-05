@@ -39,6 +39,7 @@
               </tbody>
             </table>
           </div>
+          <paging :allSize="allSize" :perSize="perSize" @pageChange="pageChange"></paging>
         </div>
       </transition>
       <transition name="articleEditCon">
@@ -74,10 +75,12 @@
   import { mavonEditor } from 'mavon-editor'
   import 'mavon-editor/dist/css/index.css'
   import axios from 'axios'
+  import paging from '../../paging/paging'
     export default {
       name: "aritcleManage",
       components: {
-        mavonEditor
+        mavonEditor,
+        paging
       },
       data () {
         return {
@@ -93,11 +96,16 @@
             "type": "",
             "author": "",
             "publish": false,
-            "content": "",
-            "timer": null
+            "content": ""
           },
+          timer: null,
           searchId: '',
+          perSize: 2,
+          allSize: 0,
+          hackReset: true
         }
+      },
+      computed: {
       },
       methods: {
         getArticle() {
@@ -107,6 +115,7 @@
         },
         dealArticle(data) {
           this.articleList = this.currentList = data;
+          this.allSize = this.currentList.length
           for (let i = 0; i < data.length; i++) {
             const typeTemp = data[i].type
             if (!this.typeList.includes(typeTemp)) {
@@ -117,7 +126,9 @@
         typeChange(type) {
           this.currentList = []
           this.currentType = type
-          if (type === '全部') this.currentList = this.articleList
+          if (type === '全部') {
+            this.currentList = this.articleList
+          }
           else {
             for (let i = 0; i < this.articleList.length; i++) {
               const articleTemp = this.articleList[i]
@@ -126,6 +137,8 @@
               }
             }
           }
+          this.allSize = this.currentList.length
+          this.currentList = this.currentList.slice(0, this.perSize)
         },
         publishEdit(id) {
           for (let i = 0; i < this.currentList.length; i++) {
@@ -165,6 +178,7 @@
         saveEdit(){
           for (let i in this.currentArticle) {
             if(this.currentArticle[i] === '' && i !== 'id' && i !== 'publish' && i !== 'content'){
+              console.log(i)
               alert('请填写必填项')
               return
             }
@@ -183,6 +197,19 @@
               }
             }
           }
+        },
+        pageChange(start, end){
+          this.currentList = []
+          if (this.currentType === '全部') {
+            this.currentList = this.articleList
+          }else{
+            for (let i = 0; i < this.articleList.length; i++) {
+              if(this.articleList[i].type === this.currentType){
+                this.currentList.push(this.articleList[i])
+              }
+            }
+          }
+          this.currentList = this.currentList.slice(start, end)
         },
 
         $imgAdd(pos, $file){
