@@ -17,7 +17,7 @@
           v-for="(item,index) of dataList"
               :key="item.id"
           >
-            <th>{{index+1}}</th>
+            <th>{{item.id}}</th>
             <th>{{item.name}}</th>
             <th>{{item.university}}</th>
             <th>{{item.time}}</th>
@@ -30,6 +30,8 @@
           </tr>
         </table>
       </div>
+      <!--分页-->
+      <paging :allSize="allSize" :perSize="perSize" @pageChange="pageChange"></paging>
       <!--对话框-->
       <div class="popBox">
         <modifyBox v-if="showPopBox" :clickMemberInfo="clickMemberInfo" :showPopBox="showPopBox" v-on:dealShowPopBox="dealShowPopBox"></modifyBox>
@@ -39,18 +41,23 @@
 
 <script>
   import axios from 'axios'
+  import paging from '../../paging/paging'
   import modifyBox from './modifyBox'
   export default {
     name: "user",
     data () {
       return {
         dataList : [],
+        dataListAc :[],
         showPopBox:false,
-        clickMemberInfo:new Object()
+        clickMemberInfo:new Object(),
+        allSize:0,
+        perSize:2,
       }
     },
     components: {
-      modifyBox:modifyBox
+      modifyBox:modifyBox,
+      paging:paging
     },
     methods:{
       getInfo() {
@@ -63,7 +70,9 @@
         for (let i = 0;i<data.length;i++){
           const dataInfo = data[i];
           this.dataList.push(dataInfo);
+          this.dataListAc.push(dataInfo);
         }
+        this.allSize = this.dataListAc.length;
       },
       dealChangeStatus(info,index){
       //  根据ID来确定用户点击的信息
@@ -77,9 +86,22 @@
         //  在定义一个弹出框组件
         this.showPopBox = true;
       },
-      dealShowPopBox(showBox){
+      dealShowPopBox(showBox,newInfo){
+        for (let i = 0;i < this.dataList.length;i++){
+          if(this.dataList[i].id == newInfo.id){
+            this.dataList[i] = newInfo;
+          }
+        }
         this.showPopBox = showBox;
-      }
+      },
+      pageChange(start, end){
+        let info = [];
+        this.dataList = [];
+        for (let i = 0;i<this.dataListAc.length;i++){
+          info.push(this.dataListAc[i]);
+        }
+        this.dataList = info.slice(start, end);
+      },
     },
     mounted() {
       //运用生命周期钩子，在进入页面的时候触发函数

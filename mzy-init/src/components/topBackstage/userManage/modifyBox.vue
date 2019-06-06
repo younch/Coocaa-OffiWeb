@@ -24,6 +24,7 @@
 </template>
 
 <script>
+  import axios from 'axios'
   export default {
     name: "modifyBox",
     props: {
@@ -39,6 +40,7 @@
       dealConfirmBtn(){
       //  子组件向父组件传值，把那个showBox的状态改变即可
         if(this.clickMemberInfo.state != this.chooseStatus){
+          this.clickMemberInfo.state = this.chooseStatus;
         //  传给后端响应的内容
           axios({
             methods: "get",
@@ -59,7 +61,8 @@
       },
       dealCancelBtn(){
         this.$refs.showForm.style.display = "none";
-        this.$emit('dealShowPopBox',false);
+        //将新的信息传过去，那边进行页面修改
+        this.$emit('dealShowPopBox',false,this.clickMemberInfo);
       }
     }
   }

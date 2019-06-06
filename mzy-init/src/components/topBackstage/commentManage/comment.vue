@@ -40,14 +40,15 @@
           <th class="timeInfo">时间</th>
           <th class="operationInfo">操作</th>
         </tr>
-        <tr class="commentTableBody" v-for="(item,index) of messageList"
-            :key="index">
+        <tr class="commentTableBody" v-for="item of commentList[0]"
+            :key="item.id">
           <th>{{item.content}}</th>
           <th>{{item.user}}</th>
           <th>{{item.time}}</th>
-          <th><button class="operationBtn" :data-id="item.id" @click="deleteInfo(item.type,item.id)">删除</button></th>
+          <th><button class="operationBtn" :data-id="item.id" @click="deleteInfo(item)">删除</button></th>
         </tr>
       </table>
+      <paging :allSize="allSize" :perSize="perSize" @pageChange="pageChange"></paging>
     </div>
     <!--关于评论列表-->
     <div class="commentTableInfo" v-show="this.commentStatus == 1">
@@ -58,30 +59,37 @@
           <th class="timeInfo">时间</th>
           <th class="operationInfo">操作</th>
         </tr>
-        <tr class="commentTableBody" v-for="(item,index) of commentList"
+        <tr class="commentTableBody" v-for="item of commentList[1]"
         :key="item.id">
           <th>{{item.content}}</th>
           <th>{{item.user}}</th>
           <th>{{item.time}}</th>
-          <th><button class="operationBtn" :data-id="item.id" @click="deleteInfo(item.type,item.id)">删除</button></th>
+          <th><button class="operationBtn" :data-id="item.id" @click="deleteInfo(item)">删除</button></th>
         </tr>
       </table>
+      <paging :allSize="allSize" :perSize="perSize" @pageChange="pageChange"></paging>
     </div>
+    <div class="hidden" v-show="freshPage"></div>
   </div>
 
 </template>
 
 <script>
   import axios from "axios"
+  import paging from '../../paging/paging'
     export default {
       name: "comment",
+      components: {
+        paging:paging
+      },
       data () {
         return {
           commentStatus: 0,
-          commentList: [],
-          messageList: [],
-          originCommentList:[],
-          originMessageList:[],
+          commentList: [[],[]],
+          // commentList: [],
+          // messageList: [],
+          originCommentList:[[],[]],
+          // originMessageList:[],
           selectItem:[{
             "value":"back",
             "name":"更新时间倒叙"
@@ -96,7 +104,14 @@
         //  搜索框里面的内容
           searchBoxMessage:"",
           searchBoxComment:"",
-          searchBox:""
+          searchBox:"",
+          //分页信息
+          allSize:0,
+          perSize:2,
+          pageAc: 0,
+          pageEn:0,
+        //  Vue重载加载
+          freshPage:false
         }
       },
       methods: {
@@ -108,12 +123,12 @@
             this.selectItemContain = this.selectItemContainComment;
             this.searchBox = this.searchBoxComment;
           }
-
           if(e.target.dataset.id == "1"){
             this.commentStatus = 1;
             this.selectItemContain = this.selectItemContainMessage;
             this.searchBox = this.searchBoxMessage;
           }
+          this.allSize = this.originCommentList[this.commentStatus].length;
         },
         getInfo(){
           axios.get('api/comment.json').then((res)=>{
@@ -125,38 +140,50 @@
           for (let i = 0;i<data.length;i++){
             const dataInfo = data[i];
             if(dataInfo.type == "message"){
-              this.messageList.push(dataInfo);
+              this.commentList[0].push(dataInfo);
             }
             else if(dataInfo.type == "comment"){
-              this.commentList.push(dataInfo);
+              this.commentList[1].push(dataInfo);
             }
           }
+          //时间排序
+          let info = new Object();
+          info.target = new Object();
+          info.target.value = this.selectItemContain;
+          this.getTimeSequence(info);
           //保存原始数据
-          this.originCommentList = this.commentList;
-          this.originMessageList = this.messageList;
-          this.sortDataArray(this.messageList,"back");
-          this.sortDataArray(this.commentList,"back");
+          for (let i = 0;i < this.commentList[0].length;i++){
+            this.originCommentList[0][i] = this.commentList[0][i];
+          }
+          for (let i = 0;i < this.commentList[1].length;i++){
+            this.originCommentList[1][i] = this.commentList[1][i];
+          }
+          this.sortDataArray(this.commentList[0],"back");
+          this.sortDataArray(this.commentList[1],"back");
+        //  分页信息
+          let index = this.commentStatus;
+          this.allSize = this.commentList[index].length;
         },
         //让下拉框里面的内容随着页面的调整而调整
-        getTimeSequence(e){
         //  获得用户选择的事件排序，默认是倒叙，如果是顺序就得重新颠倒
+        getTimeSequence(e){
           if(e.target.value == "order"){
             if(this.commentStatus == 0){
               this.selectItemContainComment = "order";
-              this.sortDataArray(this.messageList,"order");
+              this.sortDataArray(this.commentList[0],"order");
               //更改一下选择框里面选择的值
             }else if(this.commentStatus == 1){
               this.selectItemContainMessage = "order";
-              this.sortDataArray(this.commentList,"order");
+              this.sortDataArray(this.commentList[1],"order");
             }
           }else if(e.target.value == "back"){
             if(this.commentStatus == 0){
               this.selectItemContainComment = "back";
-              this.sortDataArray(this.messageList,"back");
+              this.sortDataArray(this.commentList[0],"back");
               //更改一下选择框里面选择的值
             }else if(this.commentStatus == 1){
               this.selectItemContainMessage = "back";
-              this.sortDataArray(this.commentList,"back");
+              this.sortDataArray(this.commentList[1],"back");
             }
           }
         //  获取到当前用户的所在的是留言还是评论
@@ -177,39 +204,74 @@
             });
           }
         },
+        //处理搜索框
         dealSearchBtn(){
           if(this.searchBox != ""){
+            let index = this.commentStatus;
             let searchContain = this.searchBox;
             //获取到输入框里面的内容，进行模糊匹配
             var containInfo = [];
-            if(this.commentStatus == 1){
-              for (let i = 0;i<this.commentList.length;i++){
-                if(this.commentList[i].id.indexOf(searchContain) != -1 || this.commentList[i].content.indexOf(searchContain) != -1 ||this.commentList[i].user.indexOf(searchContain) != -1 || this.commentList[i].time.indexOf(searchContain) != -1){
-                  containInfo.push(this.commentList[i]);
-                }
+            for (let i = 0;i<this.originCommentList[index].length;i++){
+              if(this.originCommentList[index][i].id.indexOf(searchContain) != -1 || this.originCommentList[index][i].content.indexOf(searchContain) != -1 ||this.originCommentList[index][i].user.indexOf(searchContain) != -1 || this.originCommentList[index][i].time.indexOf(searchContain) != -1){
+                containInfo.unshift(this.originCommentList[index][i]);
+              }else {
+                containInfo.push(this.originCommentList[index][i]);
               }
-              this.commentList = containInfo;
-            }else if(this.commentStatus == 0){
-              for (let i = 0;i<this.messageList.length;i++){
-                if(this.messageList[i].id.indexOf(searchContain) != -1 || this.messageList[i].content.indexOf(searchContain) != -1 ||this.messageList[i].user.indexOf(searchContain) != -1 || this.messageList[i].time.indexOf(searchContain) != -1){
-                  containInfo.push(this.messageList[i]);
-                }
-              }
-              this.messageList = containInfo;
             }
-            console.log(containInfo);
+            this.originCommentList[index] = [];
+            for (let i = 0;i < containInfo.length;i++){
+              this.originCommentList[index].push(containInfo[i]);
+            }
+            this.commentList[index] = containInfo.splice(0,this.perSize);
+            let info = new Object();
+            info.target = new Object();
+            info.target.value = this.selectItemContain;
+            this.getTimeSequence(info);
+            this.freshPageFc();
           }else if(this.searchBox == ""){
           //  展示全部内容
             if(this.commentStatus == 1){
-              this.commentList = this.originCommentList;
+              this.commentList[0] = this.originCommentList[0];
             }else if(this.commentStatus == 0){
-              this.messageList = this.originMessageList;
+              this.commentList[1] = this.originCommentList[1];
             }
           }
         },
-        deleteInfo(type,id){
         //  处理删除事件
-          alert("删除");
+        deleteInfo(item){
+          let index = this.commentStatus;
+          if(confirm("确定删除？")){
+            for (let i = 0;i < this.originCommentList[index].length;i++){
+              if(this.originCommentList[index][i] == item){
+                this.originCommentList[index].splice(i,1);
+              }
+              if(this.commentList[index][i] == item){
+                this.commentList[index].splice(i,1);
+              }
+            }
+            console.log(this.originCommentList[index]);
+            this.allSize = this.commentList[index].length;
+            this.pageChange(this.pageAc,this.pageEn);
+            this.freshPageFc();
+          }
+        },
+        pageChange(start, end){
+          this.pageAc = start;
+          this.pageEn = end;
+          let index = this.commentStatus;
+          let info = [];
+          for (let i = 0; i < this.originCommentList[index].length;i++){
+            info.push(this.originCommentList[index][i]);
+          }
+          this.commentList[index] = info.slice(start, end);
+          this.freshPageFc();
+        },
+        freshPageFc(){
+          if(this.freshPage){
+            this.freshPage = false;
+          }else{
+            this.freshPage = true;
+          }
         }
       },
       mounted() {
@@ -221,14 +283,15 @@
           if(this.commentStatus == 0){
             this.searchBoxComment = this.searchBox;
             if(this.searchBoxComment == ""){
-              this.messageList = this.originMessageList;
+              this.commentList[0] = this.originCommentList[0];
             }
           }else if(this.commentStatus == 1){
             this.searchBoxMessage = this.searchBox;
             if(this.searchBoxMessage == ""){
-              this.commentList = this.originCommentList;
+              this.commentList[1] = this.originCommentList[1];
             }
           }
+          this.pageChange(0,this.perSize);
         }
       }
     }
