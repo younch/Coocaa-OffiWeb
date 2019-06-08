@@ -2,6 +2,13 @@
     <div class="mainUser">
       <h2 class="pos">人员管理</h2>
       <hr style="background: #F3F6F8;border: none; height: 2px;">
+      <!--导入按钮-->
+      <div class="addUserInfo">
+        <button class="addUserInfoBtn" @click="downTemplate">下载模板</button>
+        <button class="addUserInfoBtn" @click="submitTemplate">提交表格</button>
+      </div>
+      <!--清除浮动-->
+      <br clear="all" />
       <!--中间人员列表-->
       <div class="userTableInfo">
         <table cellspacing=0 cellpadding=0 class="userTableAll">
@@ -12,6 +19,7 @@
             <th class="timeInfo">时间</th>
             <th class="statusInfo">状态</th>
             <th class="operationInfo">操作</th>
+            <th class="operationDel">删除</th>
           </tr>
           <tr class="userTableBody"
           v-for="(item,index) of dataList"
@@ -27,6 +35,10 @@
                         :data-id="item.id"
                         @click="dealChangeStatus(item,index)"
             >操作</button></th>
+            <th><button class="operationBtn"
+                        :data-id="item.id"
+                        @click="deleteUser(item)"
+            >删除</button></th>
           </tr>
         </table>
       </div>
@@ -47,12 +59,17 @@
     name: "user",
     data () {
       return {
+        //每一个分页里面的内容
         dataList : [],
+        //保存原始数据
         dataListAc :[],
         showPopBox:false,
         clickMemberInfo:new Object(),
         allSize:0,
-        perSize:2,
+        perSize:10,
+      //  分页数据
+        pageAc:0,
+        pageEn:0,
       }
     },
     components: {
@@ -91,17 +108,48 @@
           if(this.dataList[i].id == newInfo.id){
             this.dataList[i] = newInfo;
           }
+          if(this.dataListAc[i].id == newInfo.id){
+            this.dataListAc[i] = newInfo;
+          }
         }
         this.showPopBox = showBox;
       },
-      pageChange(start, end){
+      //删除管理员
+      deleteUser(info){
+        if(confirm("确定删除？")){
+          for (let i = 0;i<this.dataList.length;i++){
+            if(info == this.dataList[i]){
+              this.dataList.splice(i,1);
+              break;
+            }
+          }
+          for (let i = 0;i<this.dataListAc.length;i++){
+            if(info == this.dataListAc[i]){
+              this.dataListAc.splice(i,1);
+              break;
+            }
+          }
+          this.allSize = this.dataListAc.length;
+        }
+      },
+      //下载模板
+      downTemplate(){
+
+      },
+      //上传模板
+      submitTemplate(){
+
+      },
+      pageChange(start, end) {
+        this.pageAc = start;
+        this.pageEn = end;
         let info = [];
         this.dataList = [];
-        for (let i = 0;i<this.dataListAc.length;i++){
+        for (let i = 0; i < this.dataListAc.length; i++) {
           info.push(this.dataListAc[i]);
         }
         this.dataList = info.slice(start, end);
-      },
+      }
     },
     mounted() {
       //运用生命周期钩子，在进入页面的时候触发函数
@@ -115,6 +163,26 @@
     margin: 30px;
     background: #fff;
     border-radius: 4px;
+  }
+  /*导入信息主样式*/
+  .addUserInfo{
+    float: right;
+    margin-right: 5%;
+    margin-bottom: 1%;
+  }
+  .addUserInfoBtn{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline:0;
+    font-size: 16px;
+    height: 40px;
+    width: 80px;
+    margin-left: 30px;
+    border-radius: 5px;
+    background-color: #3788EE;
+    color: #fff;
+    border: 2px solid #fff;
+    cursor: pointer;
   }
   /*顶层样式*/
   .pos{
@@ -140,8 +208,9 @@
   .schoolInfo,
   .timeInfo,
   .statusInfo,
-  .operationInfo{
-    width: 18.4%;
+  .operationInfo,
+  .operationDel{
+    width: 15.3%;
   }
   .userTableBody{
     height: 50px;

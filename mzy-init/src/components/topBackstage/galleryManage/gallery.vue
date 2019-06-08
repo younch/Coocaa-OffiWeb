@@ -140,7 +140,7 @@
         //  封面内容，从后台接收相关数据，当前页的封面
           chooseCover: "",
           chooseCoverSeparated:[],
-          //图片信息
+          //上传图片信息
           imgList: [],
           size: 0,
           imgListAll:[[],[],[]],
@@ -149,10 +149,14 @@
           showImgSeparated: [false,false,false],
         //  分页信息
           allSize:0,
-          perSize:6,
+          perSize:9,
           freshPage: true,
+        // 分页的页码数
+          pageAc:0,
+          pageEn:0
         }
       },
+      //如果使用ref改变数据的，麻烦全部改成使用数组改变
       methods: {
         //改变页面
         galleryChange (e){
@@ -165,9 +169,6 @@
           this.imgList = this.imgListAll[this.galleryStatus];
           this.showImgCurrent = this.showImgSeparated[index];
           this.allSize = this.galleryListAllAc[index].length;
-          //一开始显示最前面的0 -- perSize页
-          // this.galleryListAll[index] = this.galleryListAllAc[index].slice(0,this.perSize);
-          console.log(index,this.allSize,this.galleryListAll[index]);
         },
         getInfo(){
           axios.get("api/gallery.json").then((res)=>{
@@ -246,7 +247,6 @@
           if(this.imgList.length == 0){
             alert("请选择需要上传的图片");
           }else{
-            // console.log(this.imgList[0].file.src);
             let index = this.galleryStatus;
             for (let i = 0;i < this.imgList.length;i++){
               let imgInfo = new Object();
@@ -259,6 +259,7 @@
             this.imgList.splice(0,this.imgList.length);
             this.size = 0;
             this.allSize = this.galleryListAllAc[index].length;
+            this.pageChange(this.pageAc,this.pageEn);
           }
         },
         //取消上传图片
@@ -344,19 +345,41 @@
                 delImgInfo:delImg
               }
             }).then((res)=>{
-                if(index == 0) {
-                  for (var i = 0;i<delImgIndex.length;i++){
-                    this.$refs.one[i].remove();
-                  }
-                }else if(index == 1){
-                  for (var i = 0;i<delImgIndex.length;i++){
-                    this.$refs.two[i].remove();
-                  }
-                }else if(index == 2){
-                  for (var i = 0;i<delImgIndex.length;i++){
-                    this.$refs.three[i].remove();
-                  }
+              //减少代码量操作
+              let idInfo = [];
+              if(index == 0){
+                for (let i = 0;i<delImgIndex.length;i++) {
+                  idInfo.push(this.$refs.one[i].dataset.index);
                 }
+              }else if(index == 1){
+                for (let i = 0;i<delImgIndex.length;i++) {
+                  idInfo.push(this.$refs.two[i].dataset.index);
+                }
+              }else if(index == 2){
+                for (let i = 0;i<delImgIndex.length;i++) {
+                  idInfo.push(this.$refs.three[i].dataset.index);
+                }
+              }
+                //删除操作
+                for (var i = 0;i<idInfo.length;i++){
+                  //获取到图片的ID，通过id删除图片信息
+                  let id = idInfo[i];
+                  for (let j = 0;j<this.galleryListAllAc[index].length;i++){
+                    if(this.galleryListAllAc[index][j].id == id){
+                      this.galleryListAllAc[index].splice(j,1);
+                      break;
+                    }
+                  }
+                  for (let j = 0;j<this.galleryListAll[index].length;i++){
+                    if(this.galleryListAll[index][j].id == id){
+                      this.galleryListAll[index].splice(j,1);
+                      break;
+                    }
+                  }
+                  this.pageChange(this.pageAc,this.pageEn);
+                }
+                this.allSize = this.galleryListAllAc[index].length;
+                this.triggerPaging();
               }
               //  刷新页面，图片重排，重新getInfo???
             );
@@ -453,7 +476,8 @@
         },
       //  分页
         pageChange(start, end){
-          console.log(start,end);
+          this.pageAc = start;
+          this.pageEn = end;
           let index = this.galleryStatus;
           let imgInfo = [];
           for (let i = 0;i<this.galleryListAllAc[index].length;i++){

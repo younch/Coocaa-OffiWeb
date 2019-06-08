@@ -86,10 +86,7 @@
         return {
           commentStatus: 0,
           commentList: [[],[]],
-          // commentList: [],
-          // messageList: [],
           originCommentList:[[],[]],
-          // originMessageList:[],
           selectItem:[{
             "value":"back",
             "name":"更新时间倒叙"
@@ -99,15 +96,13 @@
           }],
           //两个参数，代表着两个分开页面选择框里面的值
           selectItemContain:"back",
-          selectItemContainMessage: "back",
-          selectItemContainComment: "back",
+          selectItemSepared:["back","back"],
         //  搜索框里面的内容
-          searchBoxMessage:"",
-          searchBoxComment:"",
+          searchBoxSepared:["",""],
           searchBox:"",
           //分页信息
           allSize:0,
-          perSize:2,
+          perSize:10,
           pageAc: 0,
           pageEn:0,
         //  Vue重载加载
@@ -120,13 +115,13 @@
           if(e.target.dataset.id == "0"){
             this.commentStatus = 0;
           //  更改选择框里面的值
-            this.selectItemContain = this.selectItemContainComment;
-            this.searchBox = this.searchBoxComment;
+            this.selectItemContain = this.selectItemSepared[1];
+            this.searchBox = this.searchBoxSepared[1];
           }
           if(e.target.dataset.id == "1"){
             this.commentStatus = 1;
-            this.selectItemContain = this.selectItemContainMessage;
-            this.searchBox = this.searchBoxMessage;
+            this.selectItemContain = this.selectItemSepared[0];
+            this.searchBox = this.searchBoxSepared[0];
           }
           this.allSize = this.originCommentList[this.commentStatus].length;
         },
@@ -167,25 +162,28 @@
         //让下拉框里面的内容随着页面的调整而调整
         //  获得用户选择的事件排序，默认是倒叙，如果是顺序就得重新颠倒
         getTimeSequence(e){
+          let index = this.commentStatus;
           if(e.target.value == "order"){
-            if(this.commentStatus == 0){
-              this.selectItemContainComment = "order";
+            if(index == 0){
+              this.selectItemSepared[1] = "order";
               this.sortDataArray(this.commentList[0],"order");
               //更改一下选择框里面选择的值
-            }else if(this.commentStatus == 1){
-              this.selectItemContainMessage = "order";
+            }else if(index == 1){
+              this.selectItemSepared[0] = "order";
               this.sortDataArray(this.commentList[1],"order");
             }
           }else if(e.target.value == "back"){
-            if(this.commentStatus == 0){
-              this.selectItemContainComment = "back";
+            if(index == 0){
+              this.selectItemSepared[1] = "back";
               this.sortDataArray(this.commentList[0],"back");
               //更改一下选择框里面选择的值
-            }else if(this.commentStatus == 1){
-              this.selectItemContainMessage = "back";
+            }else if(index == 1){
+              this.selectItemSepared[0] = "back";
               this.sortDataArray(this.commentList[1],"back");
             }
           }
+          // let index = this.commentStatus;
+          // this.pageChange(this.pageAc,this.pageEn);
         //  获取到当前用户的所在的是留言还是评论
           /**
            * 有个问题就是，这个select选择框需要不要做两个，一个在留言管理，一个在评论管理，两个是分离的，还是选择使用在data数据里面进行绑定？？？
@@ -210,13 +208,23 @@
             let index = this.commentStatus;
             let searchContain = this.searchBox;
             //获取到输入框里面的内容，进行模糊匹配
-            var containInfo = [];
+            let containInfo = [];
+            let userWTF = [];
             for (let i = 0;i<this.originCommentList[index].length;i++){
-              if(this.originCommentList[index][i].id.indexOf(searchContain) != -1 || this.originCommentList[index][i].content.indexOf(searchContain) != -1 ||this.originCommentList[index][i].user.indexOf(searchContain) != -1 || this.originCommentList[index][i].time.indexOf(searchContain) != -1){
+              if(this.originCommentList[index][i].id == searchContain || this.originCommentList[index][i].content == searchContain || this.originCommentList[index][i].user == searchContain || this.originCommentList[index][i].time == searchContain){
+                userWTF.push(this.originCommentList[index][i]);
+              }
+              else if(this.originCommentList[index][i].id.indexOf(searchContain) != -1 || this.originCommentList[index][i].content.indexOf(searchContain) != -1 ||this.originCommentList[index][i].user.indexOf(searchContain) != -1 || this.originCommentList[index][i].time.indexOf(searchContain) != -1){
                 containInfo.unshift(this.originCommentList[index][i]);
               }else {
                 containInfo.push(this.originCommentList[index][i]);
               }
+            }
+            //将完全匹配的内容放到数组的最前面
+            this.sortDataArray(userWTF,this.selectItemContain);
+            this.sortDataArray(containInfo,this.selectItemContain);
+            for (let i = userWTF.length -1 ;i >= 0;i--){
+              containInfo.unshift(userWTF[i]);
             }
             this.originCommentList[index] = [];
             for (let i = 0;i < containInfo.length;i++){
@@ -226,8 +234,7 @@
             let info = new Object();
             info.target = new Object();
             info.target.value = this.selectItemContain;
-            this.getTimeSequence(info);
-            this.freshPageFc();
+            // this.getTimeSequence(info);
           }else if(this.searchBox == ""){
           //  展示全部内容
             if(this.commentStatus == 1){
@@ -236,6 +243,12 @@
               this.commentList[1] = this.originCommentList[1];
             }
           }
+          // //需不需要默认在按回车的时候进入的页面是第一页，如果需要就要加
+          // this.pageChange(0,this.perSize);
+          //但是显示是第一页，下面对应的页码数没有改变
+          this.freshPageFc();
+          console.log("搜索之后的显示："+this.pageAc,this.pageEn);
+          this.pageChange(this.pageAc,this.pageEn);
         },
         //  处理删除事件
         deleteInfo(item){
@@ -249,13 +262,13 @@
                 this.commentList[index].splice(i,1);
               }
             }
-            console.log(this.originCommentList[index]);
-            this.allSize = this.commentList[index].length;
+            this.allSize = this.originCommentList[index].length;
             this.pageChange(this.pageAc,this.pageEn);
             this.freshPageFc();
           }
         },
         pageChange(start, end){
+          console.log(start,end);
           this.pageAc = start;
           this.pageEn = end;
           let index = this.commentStatus;
@@ -281,17 +294,17 @@
         searchBox:function () {
           //监听搜索框里面值的不断变化
           if(this.commentStatus == 0){
-            this.searchBoxComment = this.searchBox;
-            if(this.searchBoxComment == ""){
+            this.searchBoxSepared[1] = this.searchBox;
+            if(this.searchBoxSepared[1] == ""){
               this.commentList[0] = this.originCommentList[0];
             }
           }else if(this.commentStatus == 1){
-            this.searchBoxMessage = this.searchBox;
-            if(this.searchBoxMessage == ""){
+            this.searchBoxSepared[0] = this.searchBox;
+            if(this.searchBoxSepared[0] == ""){
               this.commentList[1] = this.originCommentList[1];
             }
           }
-          this.pageChange(0,this.perSize);
+          this.pageChange(this.pageAc,this.pageEn);
         }
       }
     }
