@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueMarkdown from 'vue-markdown'
+import '../static/js/validate.js'
 
 
 Vue.config.productionTip = false;

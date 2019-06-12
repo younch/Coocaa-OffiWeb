@@ -21,17 +21,30 @@
 <!--          组件切换-->
           <div class="content">
               <aritcle-manage v-if="menuStatus == 3"></aritcle-manage>
+              <user-info v-if="menuStatus == 1" ></user-info>
+              <index v-if="menuStatus == 2"></index>
+<!--              <user-manage v-if="menuStatus == 2"></user-manage>-->
+              <galleryManage v-if="menuStatus == 7"></galleryManage>
+              <commentManage v-if="menuStatus == 8"></commentManage>
           </div>
       </div>
     </div>
 </template>
 
 <script>
+  import userInfo from '../../userInfo/userInfo'
+  import index from '../../midBackstage/index/index'
   import aritcleManage from '../articleManage/article'
+  import galleryManage from '../galleryManage/gallery'
+  import commentManage from '../commentManage/comment'
     export default {
       name: "topBackstageIndex",
       components: {
-        aritcleManage
+        aritcleManage,
+        userInfo,
+        index,
+        galleryManage,
+        commentManage
       },
       data () {
         return {

@@ -44,7 +44,7 @@ export default {
     },
     arrPageChange(){
       this.currentPageArr = []
-      if(this.currentPage <= 5){
+      if(this.allPage < 9 || this.currentPage <= 5){
         for (let i = 1; i <= this.allPage && i <= 9; i++) {
           this.currentPageArr.push(i)
         }

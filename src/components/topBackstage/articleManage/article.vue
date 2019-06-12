@@ -50,9 +50,10 @@
             <label for="title">标题</label>
             <input id="title" type="text" v-model="currentArticle.title">
             <label for="type">类型</label>
-            <select id="type" v-model="currentArticle.type">
+            <input list="type" v-model="currentArticle.type"/>
+            <datalist id="type">
               <option v-for="item of typeList" :value="item" v-if="item !== '全部'">{{item}}</option>
-            </select>
+            </datalist>
             <label for="author">作者</label>
             <input id="author" type="text" v-model="currentArticle.author">
             <label for="date">日期</label>
@@ -100,7 +101,7 @@
           },
           timer: null,
           searchId: '',
-          perSize: 2,
+          perSize: 8,
           allSize: 0,
           hackReset: true
         }
@@ -116,8 +117,11 @@
         dealArticle(data) {
           this.articleList = this.currentList = data;
           this.allSize = this.currentList.length
-          for (let i = 0; i < data.length; i++) {
-            const typeTemp = data[i].type
+        },
+        dealType(){
+          this.typeList = ['全部']
+          for (let i = 0; i < this.articleList.length; i++) {
+            const typeTemp = this.articleList[i].type
             if (!this.typeList.includes(typeTemp)) {
               this.typeList.push(typeTemp)
             }
@@ -125,7 +129,7 @@
         },
         typeChange(type) {
           this.currentList = []
-          this.currentType = type
+          this.currentType = this.typeList.includes(type)?type:'全部'
           if (type === '全部') {
             this.currentList = this.articleList
           }
@@ -137,7 +141,7 @@
               }
             }
           }
-          this.allSize = this.currentList.length
+          this.allSize = this.currentList.length + Math.random()/10
           this.currentList = this.currentList.slice(0, this.perSize)
         },
         publishEdit(id) {
@@ -178,7 +182,6 @@
         saveEdit(){
           for (let i in this.currentArticle) {
             if(this.currentArticle[i] === '' && i !== 'id' && i !== 'publish' && i !== 'content'){
-              console.log(i)
               alert('请填写必填项')
               return
             }
@@ -201,12 +204,17 @@
         pageChange(start, end){
           this.currentList = []
           if (this.currentType === '全部') {
-            this.currentList = this.articleList
+            this.currentList = JSON.parse(JSON.stringify(this.articleList))
           }else{
             for (let i = 0; i < this.articleList.length; i++) {
               if(this.articleList[i].type === this.currentType){
                 this.currentList.push(this.articleList[i])
               }
+            }
+          }
+          for (let i = this.currentList.length - 1; i >= 0 ; i--) {
+            if(!this.currentList[i].title.includes(this.searchId)){
+              this.currentList.splice(i, 1)
             }
           }
           this.currentList = this.currentList.slice(start, end)
@@ -244,7 +252,7 @@
           this.timer = setTimeout(() => {
             const searchid = this.searchId
             var arr = []
-            if (!searchid) {
+            if (searchid === '') {
               if (this.currentType === '全部') arr = this.articleList
               else {
                 for (let i = 0; i < this.articleList.length; i++) {
@@ -263,7 +271,12 @@
               }
             }
             this.currentList = arr
+            this.allSize = arr.length + Math.random()/10
           }, 300)
+        },
+        articleList: function () {
+          this.dealType()
+          this.typeChange(this.currentType)
         }
       },
       mounted() {

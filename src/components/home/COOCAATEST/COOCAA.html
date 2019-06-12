@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+<meta charset="UTF-8">
+<title>COOCAA</title>
+<link rel="stylesheet" href="css/style.css">
+<script type="text/javascript" src="js/index.js"></script>
+
+    <script type="text/javascript">
+    var mt = 0;
+    window.onload = function () {
+        var mydiv = document.getElementById("nav");
+        var mt = mydiv.offsetTop;
+        window.onscroll = function () {
+            var t = document.documentElement.scrollTop || document.body.scrollTop;
+            if (t > mt) {
+                mydiv.style.position = "fixed";                    
+                mydiv.style.top = "0";
+            }
+            else {
+                mydiv.style.position = "static";
+            }
+        }
+    }
+
+</script>
+</head>
+<body>
+	 <nav id="nav" class="top1">  
+	  <div>
+			
+	        <ul class="top2">
+				<a href="#"><li class="top3" style="color: #EF3445;font-size: 24px;margin-right: 50px;">Cooca</li></a>
+	            <a href="#"><li class="top3">首页</li></a>
+	            <a href="#"><li class="top3">新闻资讯</li></a>
+	            <a href="#"><li class="top3">高校阵营</li></a>
+	            <a href="#"><li class="top3">俱乐部夏令营</li></a>
+				<a href="#"><li class="top3">实践空间站</li></a>
+				<a href="#"><li class="top3">线上课堂</li></a>
+				<a href="#"><li class="top3">关于我们</li></a>
+				<a href="#"><li class="top3">登录注册</li></a>
+	        </ul>
+			
+	    </div>
+	</nav>
+        <div class="sea">
+                <span class="wave"></span>
+                <span class="wave"></span>
+                <span class="wave"></span>
+                <div class="wavestyle">
+                        <p class="coocaa">coocaa&nbsp;&nbsp;CLUB</p>
+						<p class="club"></p>
+				</div>
+				<div class="more">
+						<span class="news1">
+							<a href="https://www.baidu.com/" style="text-decoration: none;cursor: pointer;color:#ffbe76;font-size:25px;">Know More</a>
+							</span>
+				</div>
+			</div>
+		<div>
+			
+			<div class="Carousel1"><!--文字轮播图-->
+			<div class="frame2">
+					<span class="news">新闻资讯</span>
+				</div>
+			<hr style="text-align:center;height:300px;border:none;border-top:3px solid tomato;width:2000px;" />
+			<img class="slide1" src="img/slide_w.png" />
+					<div class="slide_w">
+						<span class="title" style="color: #EF3445; font-size: 38px;margin-left: 160px;">What's News</span>
+						<hr style="margin-top:15px;height:20px;border:none;border-top:2px solid lightgrey;width:370px;margin-left: 330px;" />
+								</div>
+								<div class="inslide">
+								<ul class="ul">
+									<li>1.1111111111111111111111111111</li>
+									<li>2.2222222222222222222222222222</li>
+									<li>3.3333333333333333333333333333</li>
+									<li>4.4444444444444444444444444444</li>
+									<li>5.5555555555555555555555555555</li>
+									<li>6.6666666666666666666666666666</li>
+									<li>1.1111111111111111111111111111</li>
+									<li>2.2222222222222222222222222222</li>
+									<li>3.3333333333333333333333333333</li>
+									<li>4.4444444444444444444444444444</li>
+									<li>5.5555555555555555555555555555</li>
+									<li>6.6666666666666666666666666666</li>
+									<li>1.1111111111111111111111111111</li>
+									<li>2.2222222222222222222222222222</li>
+									<li>3.3333333333333333333333333333</li>
+									<li>4.4444444444444444444444444444</li>
+									<li>5.5555555555555555555555555555</li>
+									<li>6.6666666666666666666666666666</li>
+									<li>1.1111111111111111111111111111</li>
+									<li>2.2222222222222222222222222222</li>
+									<li>3.3333333333333333333333333333</li>
+									<li>4.4444444444444444444444444444</li>
+									<li>5.5555555555555555555555555555</li>
+									<li>6.6666666666666666666666666666</li>
+								</ul>
+								</div>
+</div>		
+			</div>
+
+			<div class="Carousel2">
+					<div class="frame2">
+							<span class="news">俱乐部夏令营</span>
+						</div>
+				<hr style="height:1px;border:none;border-top:4px solid tomato;width:2000px;" />
+			</div>
+
+			<div class="Carousel3">
+				<div id="box">
+            <img src="img/timg.jpg"  />
+            <ul id="list">
+                <li class="li">1</li>
+                <li class="li">2</li>
+                <li class="li">3</li>
+                <li class="li">4</li>
+                <li class="li">5</li>
+                <li class="li">6</li>
+                <li class="li">7</li>
+                <li class="li">8</li>
+            </ul>
+            <div id="leftbt"><</div>
+            <div id="rightbt">></div>
+        </div>
+        <!--引入外部js-->
+        <script type="text/javascript" src="js/lunbotu.js"></script>
+
+			</div>
+		</div>
+		
+   <div class="form">
+		<div class="frame2">
+				<span class="news">实践空间站</span>
+			</div>
+		<hr style="height:1px;border:none;border-top:4px solid tomato;width:2000px;" />
+		<nav class="projects1">
+			<ul class="project"><li class="detail"></li><span class="proname">Project Title</span><span class="proIn">Intorduction</span></ul>
+			<ul class="project"><li class="detail"></li><span class="proname">Project Title</span><span class="proIn">Intorduction</span></ul>
+			<ul class="project"><li class="detail"></li><span class="proname">Project Title</span><span class="proIn">Intorduction</span></ul>
+			<ul class="project"><li class="detail"></li><span class="proname">Project Title</span><span class="proIn">Intorduction</span></ul>
+		</nav>
+		<nav class="projects2">
+			<ul class="project"><li class="detail"></li><span class="proname">Project Title</span><span class="proIn">Intorduction</span></ul>
+			<ul class="project"><li class="detail"></li><span class="proname">Project Title</span><span class="proIn">Intorduction</span></ul>
+			<ul class="project"><li class="detail"></li><span class="proname">Project Title</span><span class="proIn">Intorduction</span></ul>
+			<ul class="project"><li class="detail"></li><span class="proname">Project Title</span><span class="proIn">Intorduction</span></ul>
+		</nav>
+	   </div>
+
+	   <div>
+			<div class="frame3">
+					<span class="news">线上课堂</span>
+				</div>
+	   <hr style="height:1px;border:none;border-top:4px solid tomato;margin-top:105px;width:2000px;" />
+	
+	</div>
+	<div>
+   <div class="video1"><img src="img/timg.jpg" style="width: 80px;margin-top: 33px;"></div>
+   <div class="video2"><img src="img/timg.jpg" style="width: 80px;margin-top: 33px;"></div>
+   <div class="video3"><img src="img/timg.jpg" style="width: 80px;margin-top: 33px;"></div>
+   <div class="video4"><img src="img/timg.jpg" style="width: 80px;margin-top: 33px;"></div>
+   <div class="video5"><img src="img/timg.jpg" style="width: 80px;margin-top: 33px;"></div>
+   <div class="video6"><img src="img/timg.jpg" style="width: 80px;margin-top: 33px;"></div>
+</div>
+<div>
+		<div class="frame4">
+				<span class="news">关于我们</span>
+			</div>
+   <hr style="height:1px;border:none;border-top:4px solid tomato;margin-top:-35px;width:2000px;" />
+</div>
+<div>
+		<div class="video1"></div>
+		<span style="position:absolute;margin-top: 60px;margin-left: -18%;font-size: 40px;color: tomato;">ABCD</span>
+		<span style="position:absolute;margin-top: 115px;margin-left: -17.8%;font-size: 20px;color: rgb(134, 131, 131);">Welcome</span>
+	</div>
+	<div>
+			<div class="video6"></div>
+			<span style="position:absolute;margin-top:258px;margin-left: 9%;font-size: 40px;color: tomato;">ABCD</span>
+			<span style="position: absolute;margin-top: 311px;margin-left: 10%;font-size: 20px;color: rgb(134, 131, 131);">Welcome</span>
+		</div>
+   <div class="footer" style="width: 100%;">
+		<iframe src="footer.html" frameborder="0"  scrolling="no" style="position:absolute;margin-top:800px;margin-left:-842px;width: 100%"></iframe>
+		</div>
+  
+</body>
+<script type="text/javascript" src="js/w-slide.js"></script>
+</html>

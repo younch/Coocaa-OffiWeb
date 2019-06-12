@@ -1,0 +1,322 @@
+{
+  "ret": true,
+  "data": {
+    "totalSize": 30,
+    "listData": [
+      {
+        "id": 1,
+        "title": "This is Article 1",
+        "img": "https://dymonelewis.github.io/images/inaword.jpg",
+        "subtitle": "this is an article of Coocaa",
+        "time": "2019-05-06"
+      },
+      {
+        "id": 2,
+        "title": "This is Article Title",
+        "img": "https://dymonelewis.github.io/images/inaword.jpg",
+        "subtitle":  "this is an article of Coocaa",
+        "time": "2019-05-06"
+      },
+      {
+        "id": 3,
+        "title": "This is Article Title",
+        "img": "https://dymonelewis.github.io/images/inaword.jpg",
+        "subtitle":  "this is an article of Coocaa",
+        "time": "2019-05-06"
+      },
+      {
+        "id": 4,
+        "title": "This is Article Title",
+        "img": "https://dymonelewis.github.io/images/inaword.jpg",
+        "subtitle":  "this is an article of Coocaa",
+        "time": "2019-05-06"
+      },
+      {
+        "id": 5,
+        "title": "This is Article 5",
+        "img": "https://dymonelewis.github.io/images/inaword.jpg",
+        "subtitle": "this is an article of Coocaa",
+        "time": "2019-05-06"
+      },
+      {
+        "id": 6,
+        "title": "This is Article 6",
+        "img": "https://dymonelewis.github.io/images/inaword.jpg",
+        "subtitle": "this is an article of Coocaa",
+        "time": "2019-05-06"
+      },
+      {
+        "id": 7,
+        "title": "This is Article 7",
+        "img": "https://dymonelewis.github.io/images/inaword.jpg",
+        "subtitle": "this is an article of Coocaa",
+        "time": "2019-05-06"
+      },
+      {
+        "id": 8,
+        "title": "This is Article 8",
+        "img": "https://dymonelewis.github.io/images/inaword.jpg",
+        "subtitle": "this is an article of Coocaa",
+        "time": "2019-05-06"
+      },
+      {
+        "id": 9,
+        "title": "This is Article 9",
+        "img": "https://dymonelewis.github.io/images/inaword.jpg",
+        "subtitle": "this is an article of Coocaa",
+        "time": "2019-05-06"
+      },
+      {
+        "id": 10,
+        "title": "This is Article 10",
+        "img": "https://dymonelewis.github.io/images/inaword.jpg",
+        "subtitle": "this is an article of Coocaa",
+        "time": "2019-05-06"
+      },
+      {
+        "id": 11,
+        "title": "This is Article 11",
+        "img": "https://dymonelewis.github.io/images/inaword.jpg",
+        "subtitle": "this is an article of Coocaa",
+        "time": "2019-05-06"
+      },
+      {
+        "id": 12,
+        "title": "This is Article 12",
+        "img": "https://dymonelewis.github.io/images/inaword.jpg",
+        "subtitle": "this is an article of Coocaa",
+        "time": "2019-05-06"
+      },
+      {
+        "id": 13,
+        "title": "This is Article 13",
+        "img": "https://dymonelewis.github.io/images/inaword.jpg",
+        "subtitle": "this is an article of Coocaa",
+        "time": "2019-05-06"
+      },
+      {
+        "id": 14,
+        "title": "This is Article 14",
+        "img": "https://dymonelewis.github.io/images/inaword.jpg",
+        "subtitle": "this is an article of Coocaa",
+        "time": "2019-05-06"
+      },
+      {
+        "id": 15,
+        "title": "This is Article 15",
+        "img": "https://dymonelewis.github.io/images/inaword.jpg",
+        "subtitle": "this is an article of Coocaa",
+        "time": "2019-05-06"
+      },
+      {
+        "id": 16,
+        "title": "This is Article 16",
+        "img": "https://dymonelewis.github.io/images/inaword.jpg",
+        "subtitle": "this is an article of Coocaa",
+        "time": "2019-05-06"
+      },
+      {
+        "id": 17,
+        "title": "This is Article 17",
+        "img": "https://dymonelewis.github.io/images/inaword.jpg",
+        "subtitle": "this is an article of Coocaa",
+        "time": "2019-05-06"
+      },
+      {
+        "id": 18,
+        "title": "This is Article 18",
+        "img": "https://dymonelewis.github.io/images/inaword.jpg",
+        "subtitle": "this is an article of Coocaa",
+        "time": "2019-05-06"
+      },
+      {
+        "id": 19,
+        "title": "This is Article 19",
+        "img": "https://dymonelewis.github.io/images/inaword.jpg",
+        "subtitle": "this is an article of Coocaa",
+        "time": "2019-05-06"
+      },
+      {
+        "id": 20,
+        "title": "This is Article 20",
+        "img": "https://dymonelewis.github.io/images/inaword.jpg",
+        "subtitle": "this is an article of Coocaa",
+        "time": "2019-05-06"
+      },
+      {
+        "id": 21,
+        "title": "This is Article 21",
+        "img": "https://dymonelewis.github.io/images/inaword.jpg",
+        "subtitle": "this is an article of Coocaa",
+        "time": "2019-05-06"
+      },{
+        "id": 22,
+        "title": "This is Article 22",
+        "img": "https://dymonelewis.github.io/images/inaword.jpg",
+        "subtitle": "this is an article of Coocaa",
+        "time": "2019-05-06"
+      },{
+        "id": 23,
+        "title": "This is Article 23",
+        "img": "https://dymonelewis.github.io/images/inaword.jpg",
+        "subtitle": "this is an article of Coocaa",
+        "time": "2019-05-06"
+      },{
+        "id":24,
+        "title": "This is Article 24",
+        "img": "https://dymonelewis.github.io/images/inaword.jpg",
+        "subtitle": "this is an article of Coocaa",
+        "time": "2019-05-06"
+      },{
+        "id": 25,
+        "title": "This is Article 25",
+        "img": "https://dymonelewis.github.io/images/inaword.jpg",
+        "subtitle": "this is an article of Coocaa",
+        "time": "2019-05-06"
+      }],
+    "comments": [
+      {
+        "commentId":71,
+        "articleId":1,
+        "userId":3,
+        "nickName":"yjj",
+        "avatar":"http://img1.qunarzz.com/piao/fusion/1801/1a/94428c6dea109402.jpg_640x200_2cf590d8.jpg",
+        "content":"redis测试评论",
+        "createTime":"2019-06-09T08:34:13.225+0000",
+        "commentReplyList":[
+        {
+          "id":9,
+          "commentId":71,
+          "content":"测试回复",
+          "fromId":3,
+          "fromName":"yjj",
+          "createTime":"2019-06-09T08:50:57.000+0000",
+          "toId":1,
+          "toName":"yjj"
+        }
+      ]
+    },
+      {
+        "commentId":72,
+        "articleId":1,
+        "userId":3,
+        "nickName":"yjj",
+        "avatar":"http://img1.qunarzz.com/piao/fusion/1801/1a/94428c6dea109402.jpg_640x200_2cf590d8.jpg",
+        "content":"redis测试评论",
+        "createTime":"2019-06-09T08:34:14.177+0000",
+        "commentReplyList":[
+
+      ]
+      },
+      {
+        "commentId":73,
+        "articleId":1,
+        "userId":3,
+        "nickName":"yjj",
+        "avatar":"http://img1.qunarzz.com/piao/fusion/1801/1a/94428c6dea109402.jpg_640x200_2cf590d8.jpg",
+        "content":"redis测试评论",
+        "createTime":"2019-06-09T08:34:15.529+0000",
+        "commentReplyList":[
+
+      ]
+      },
+      {
+        "commentId":74,
+        "articleId":1,
+        "userId":3,
+        "nickName":"yjj",
+        "avatar":"http://img1.qunarzz.com/piao/fusion/1801/1a/94428c6dea109402.jpg_640x200_2cf590d8.jpg",
+        "content":"redis测试评论",
+        "createTime":"2019-06-09T08:34:16.965+0000",
+        "commentReplyList":[
+
+      ]
+      },
+      {
+        "commentId":75,
+        "articleId":1,
+        "userId":3,
+        "nickName":"yjj",
+        "avatar":"http://img1.qunarzz.com/piao/fusion/1801/1a/94428c6dea109402.jpg_640x200_2cf590d8.jpg",
+        "content":"redis测试评论",
+        "createTime":"2019-06-09T08:34:18.174+0000",
+        "commentReplyList":[
+
+      ]
+      },
+      {
+        "commentId":76,
+        "articleId":1,
+        "userId":3,
+        "nickName":"yjj",
+        "avatar":"http://img1.qunarzz.com/piao/fusion/1801/1a/94428c6dea109402.jpg_640x200_2cf590d8.jpg",
+        "content":"redis测试评论",
+        "createTime":"2019-06-09T08:34:19.414+0000",
+        "commentReplyList":[
+
+      ]
+      },
+      {
+        "commentId":77,
+        "articleId":1,
+        "userId":3,
+        "nickName":"yjj",
+        "avatar":"http://img1.qunarzz.com/piao/fusion/1801/1a/94428c6dea109402.jpg_640x200_2cf590d8.jpg",
+        "content":"redis测试评论",
+        "createTime":"2019-06-09T08:34:20.149+0000",
+        "commentReplyList":[
+
+      ]
+      },
+      {
+        "commentId":78,
+        "articleId":1,
+        "userId":3,
+        "nickName":"yjj",
+        "avatar":"http://img1.qunarzz.com/piao/fusion/1801/1a/94428c6dea109402.jpg_640x200_2cf590d8.jpg",
+        "content":"redis测试评论",
+        "createTime":"2019-06-09T08:34:20.905+0000",
+        "commentReplyList":[
+
+      ]
+      },
+      {
+        "commentId":79,
+        "articleId":1,
+        "userId":3,
+        "nickName":"yjj",
+        "avatar":"http://img1.qunarzz.com/piao/fusion/1801/1a/94428c6dea109402.jpg_640x200_2cf590d8.jpg",
+        "content":"redis测试评论",
+        "createTime":"2019-06-09T08:34:21.596+0000",
+        "commentReplyList":[
+
+      ]
+      },
+      {
+        "commentId":80,
+        "articleId":1,
+        "userId":3,
+        "nickName":"yjj",
+        "avatar":"http://img1.qunarzz.com/piao/fusion/1801/1a/94428c6dea109402.jpg_640x200_2cf590d8.jpg",
+        "content":"redis测试评论",
+        "createTime":"2019-06-09T08:34:22.310+0000",
+        "commentReplyList":[
+
+      ]
+      },
+      {
+        "commentId":81,
+        "articleId":1,
+        "userId":3,
+        "nickName":"yjj",
+        "avatar":"http://img1.qunarzz.com/piao/fusion/1801/1a/94428c6dea109402.jpg_640x200_2cf590d8.jpg",
+        "content":"redis测试评论",
+        "createTime":"2019-06-09T08:34:23.000+0000",
+        "commentReplyList":[
+
+      ]
+      }
+    ]
+}
+
+    }
